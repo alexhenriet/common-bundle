@@ -1,0 +1,14 @@
+services:
+
+  Alexhenriet\Bundle\CommonBundle\Security\BypassableLdapLoginFormAuthenticator:
+    arguments:
+      $urlGenerator: '@router'
+      $environment: '%kernel.environment%'
+      $ldapHost : '%common.ldap_host%'
+      $ldapPort : '%common.ldap_port%'
+      $ldapOptProtocolVersion : '%common.ldap_opt_protocol_version%'
+      $ldapOptReferrals : '%common.ldap_opt_referrals%'
+      $loginPrefix: '%common.login_prefix%'
+      $loginRoute: '%common.login_route%'
+      $bypassUserIdentifiers: '%common.bypass_user_identifiers%'
+      $bypassEnvironments: '%common.bypass_environments%'

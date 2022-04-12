@@ -1,0 +1,23 @@
+{
+  "name": "alexhenriet/common-bundle",
+  "type": "symfony-bundle",
+  "description": "Common stuffs used in Symfony projects",
+  "keywords": [],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexandre Henriet"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.5",
+    "ext-ldap": "*",
+    "symfony/security-bundle": "^5.4",
+    "symfony/config": "^5.4",
+    "symfony/dependency-injection": "^5.4"
+  },
+  "autoload": {
+    "psr-4": { "Alexhenriet\\Bundle\\CommonBundle\\": "" }
+  },
+  "minimum-stability": "dev"
+}
