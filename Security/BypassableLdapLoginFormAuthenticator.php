@@ -88,7 +88,12 @@ class BypassableLdapLoginFormAuthenticator extends AbstractLoginFormAuthenticato
                         in_array($user->getUserIdentifier(), $this->bypassUserIdentifiers)) {
                         return true;
                     }
-                    return $this->check($this->loginPrefix . '\\' . $user->getUserIdentifier(), $credentials);
+                    if (empty($this->loginPrefix)) {
+                        $userIdentifier = $user->getUserIdentifier();
+                    } else {
+                        $userIdentifier = $this->loginPrefix . '\\' . $user->getUserIdentifier();
+                    }
+                    return $this->check($userIdentifier, $credentials);
                 },
                 $password
             ),
