@@ -78,7 +78,7 @@ class BypassableLdapLoginFormAuthenticator extends AbstractLoginFormAuthenticato
     public function authenticate(Request $request) : Passport
     {
         $password = $request->request->get('_password');
-        $username = $request->request->get('_username');
+        $username = $request->request->get('_username', '');
         $csrfToken = $request->request->get('_csrf_token');
         return new Passport(
             new UserBadge($username),
