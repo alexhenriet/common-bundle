@@ -1,22 +1,10 @@
-CommonBundle
-============
+# CommonBundle
 
 Common stuffs used in Symfony projects.
 
-How to install the bundle ?
----------------------------
-1. Install the package with composer
+## How to install the bundle ?
 
-       composer require alexhenriet/common-bundle
-
-2. Enable the package in config/bundles.php
-
-       return [
-           ...
-           Alexhenriet\Bundle\CommonBundle\CommonBundle::class => ['all' => true],
-       ];
-
-3. Create bundle configuration in config/packages/alexhenriet_common.yaml
+1. Create bundle configuration in config/packages/alexhenriet_common.yaml BEFORE requiring the package or you'll get an error during install (the bundle has no recipe)
 
        common:
            ldap_host: 'ldap-host.lan'
@@ -28,10 +16,25 @@ How to install the bundle ?
            bypass_user_identifiers: ['MyLogin']
            bypass_environments: ['loc']
 
-How to use the bundle ?
------------------------
+2. Install the package with composer
 
-1. Use the custom authenticator in the security.yaml
+       composer require alexhenriet/common-bundle
+
+3. Enable the package in config/bundles.php
+
+       return [
+           ...
+           Alexhenriet\Bundle\CommonBundle\CommonBundle::class => ['all' => true],
+       ];
+
+## How to use the bundle ?
+
+### Custom Authenticator
+
+1. Generate user and auth using commands provided by symfony/maker-bundle
+
+
+2. Replace the custom authenticator in the security.yaml
 
        security:
            enable_authenticator_manager: true
@@ -41,15 +44,28 @@ How to use the bundle ?
                custom_authenticators:
                    - Alexhenriet\Bundle\CommonBundle\Security\BypassableLdapLoginFormAuthenticator
 
-2. Extend the abstract controller in a controller
+3. Use _username and _password as input names in your template\security\login.html.twig
+
+### Abstract Controller
+
+1. Extend the abstract controller in a controller
 
        use Alexhenriet\Bundle\CommonBundle\Controller\AbstractController;
 
        class ActionsController extends AbstractController
        {}
 
-Warranty Disclaimer and Limitation of Liability
------------------------------------------------
+2. If you get error "Controller ... cannot be fetched from the container because it is private",
+add the following lines to your services.yaml
+
+       # controllers are imported separately to make sure services can be injected
+       # as action arguments even if you don't extend any base controller class
+       App\Controller\:
+         resource: '../src/Controller/'
+         tags: ['controller.service_arguments']
+
+## Warranty Disclaimer and Limitation of Liability
+
 THIS FREE LIBRARY IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTY OF ANY KIND. 
 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE AUTHOR DISCLAIMS ALL WARRANTIES, EXPRESS, IMPLIED, 
 STATUTORY OR OTHERWISE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR 
